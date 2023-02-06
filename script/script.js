@@ -1,5 +1,7 @@
 const play = document.getElementById("play");
 const start = document.getElementById("start");
+const again = document.getElementById("again");
+const home = document.getElementById("home");
 
 const startPage = document.getElementById("startPage");
 const instructionPage = document.getElementById("instructionPage");
@@ -10,8 +12,11 @@ const finalPage = document.getElementById("finalPage");
 const clickSound = document.getElementById("click")
 const clap = document.getElementById("clap")
 const completed = document.getElementById("correct")
-const lose = document.getElementById("wrong")
+const wrong = document.getElementById("wrong")
+const lose = document.getElementById("lose")
 
+const scoreCount = document.getElementById("score-count")
+const questionCount = document.getElementById("question-count")
 const mark = document.getElementById("mark")
 const checkAnswer = document.getElementById("checkAnswer")
 const showAnswer = document.getElementById("showAnswer")
@@ -36,8 +41,19 @@ const levels = [
     {winCondition:20, dropSpeed:10}
 ]
 
-//here is popUp example
-const popUpButton = document.querySelectorAll(".popUpButton");
+let current;
+let total = 5;
+let score;
+
+let tempoArray = [];
+
+let answer = {answer:"C", image: "./img/correct.png"}
+
+//here is answerBtn user can select
+const answerBtn = document.querySelectorAll(".answerBtn");
+
+//here is finalV2
+const group1 = document.querySelector(".group1");
 
 play.addEventListener("click", () => {
     playClickSound()
@@ -73,45 +89,88 @@ levelButtons.forEach(function(level){
     })    
 })
 
-popUpButton.forEach(function(button){
+answerBtn.forEach(function(button){
     button.addEventListener('click', () => {
         playClickSound()
+        console.log(answer.image, answer.answer)
+
+        let data  = button.getAttribute("data")
+
         popUp.classList.remove("hide")
         
-        correctAnswer.src = "./img/correct.png"
+        correctAnswer.src = answer.image
 
-        let lose;
-        if(button.classList.contains("correct")){
+        if(data == answer.answer){
             mark.src = "./img/correct.png"
             checkAnswer.textContent = "Correct!"
             showAnswer.classList.add("hide")
-            lose = true;
+            score +=1
+            scoreCount.textContent = score;
         }
         else{
             mark.src = "./img/wrong.png"
             checkAnswer.textContent = "Good try!"
             showAnswer.classList.remove("hide")
-            lose = false;
         }
         
         setTimeout(function(){
             popUp.classList.add("hide");
-            gamePage.classList.add("hide")
-            endGame(lose)
+            if(current == total){
+                gamePage.classList.add("hide")
+                endGame()
+            }
+            else{
+                Question()
+            }
         }, 2000)
     })    
+})
+
+again.addEventListener("click", () => {
+  playClickSound()
+  //controls amd buttons visibility
+  let delay = setTimeout(() => {
+    startPage.classList.remove("hide");
+    finalPage.classList.add("hide")
+  }, 200);
+});
+
+home.addEventListener("click", () => {
+  playClickSound()
+  let delay = setTimeout(() => {
+    location.assign('https://gimme.sg/activations/minigames/main.html');
+  }, 200);
 })
 
 
 function ready(){
     //code here to get UI ready 
     //like number of point to zero and others
+    current = 0;
+    questionCount.textContent = current + "/" + total
 
+    score = 0;
+    scoreCount.textContent = score
+
+    //resetArray()
+}
+
+function resetArray(){
+    tempoArray = []
+
+    for(let i = 0; i < numbers.length; i++){
+        tempoArray.push(numbers[i])
+    }
 }
 
 function Question(){
     //game that starts the game like showing question and stuff
     console.log("Catch " + levels[levelIndex].winCondition + " flowers and they drop at " + levels[levelIndex].dropSpeed + " speed")
+    current +=1;
+    questionCount.textContent = current + "/" + total;
+
+    answer.answer = "C"
+    answer.image = "./img/correct.png"
 }
 
 function playClickSound(){
@@ -120,34 +179,91 @@ function playClickSound(){
     clickSound.play()
 }
 
-function endGame(lose){
+function endGame(){
     finalPage.classList.remove("hide")
-    if(lose & levelIndex == 0){
-        medal.classList.remove("hidden")
-        scoreText.textContent = "Good job!"
-        words1.innerHTML = "You xxx <br> 5 xxx"
-        words2.textContent = ""
-    }
-    else if (!lose & levelIndex == 0){
-        medal.classList.add("hidden")
-        scoreText.textContent = "You tried!"
-        words1.innerHTML = "Good try!"
-        words2.textContent = "do better next time"
-    }
+
+    let pass = total / 2
+
+    //this is for first version
+    if(levelIndex == 0){//REMOVE THIS
+        if(score < pass){
+            lose.currentTime = 0
+            lose.play()
+            medal.classList.add("hidden")
+            scoreText.textContent = "You tried!"
+            words1.innerHTML = "Good try!"
+            words2.textContent = "do better next time"
+        }
+        else{
+            clap.currentTime = 0
+            clap.play() 
+            medal.classList.remove("hidden")
+            scoreText.textContent = "Good job!"
+            words1.innerHTML = `You got <br> ${score} right!`
+            words2.textContent = ""
+            setTimeout(function(){
+                confetti.start()
+                setTimeout(function(){
+                    confetti.stop()
+                }, 2000)
+            }, 500)
+        }
+    } //REMOVE THIS
 
     //this is for second version
-    else if(lose){
-        medal.classList.remove("hidden")
-        scoreText.textContent = "Superstar"
+    else{//REMOVE THIS
+        let starScore = total / 5;
+        //change the star image according the score;
+        if(score < pass){
+            lose.currentTime = 0
+            lose.play()
+            if(score == starScore + starScore)
+                    medal.src = "./img/youTried.png"
+                else if(score < starScore + starScore && score >= starScore) // score < 2 && score >= 1
+                    medal.src = "./img/youTried1.png"
+                else
+                    medal.src = "./img/youTried2.png"
+
+            group1.classList.add("group1V2")
+            scoreText.textContent = "Good try!"
+            scoreText.classList.add("scoreTextV2")
+            words1.classList.add("words1V2")
+            words2.classList.add("words2V2")
+            words1.innerHTML = "Your score"
+        }
+        else{
+            clap.currentTime = 0
+            clap.play()
+            if(score == total) // score = 5
+                medal.src = "./img/excellent.png"
+            else if(score < total && score >= total - starScore) // score < 5 && score >= 4
+                medal.src = "./img/wellDone.png"
+            else if(score < total - starScore && score >= (total - starScore - starScore)) // score < 4 && score >= 3
+                medal.src = "./img/wellDone1.png"
+
+            group1.classList.add("group1V2")
+            words1.classList.add("words1V2")
+            words2.classList.add("words2V2")
+
+            scoreText.classList.add("scoreTextV2")
+
+            if(score == total){
+                scoreText.textContent = "Superstar!"
+            }
+            else{
+                scoreText.textContent = "Good try!"
+            }
+
+            setTimeout(function(){
+                confetti.start()
+                setTimeout(function(){
+                    confetti.stop()
+                }, 2000)
+            }, 500)
+        }
         words1.innerHTML = "Your score"
-        words2.textContent = "5/5"
-    }
-    else if (!lose){
-        medal.classList.remove("hidden")
-        scoreText.textContent = "Good try!"
-        words1.innerHTML = "Your score"
-        words2.textContent = "0/5"
-    }
+        words2.textContent = score + "/" + total
+    } //REMOVE THIS
 }
 
 /*prevent double tag zoom*/

@@ -59,26 +59,23 @@
     <div id="gamePage" class="gamePage hide">
         <div class="top">
             <div class="question">
-                <p class="question-count">1/5</p>
+                <p id="question-count" class="question-count">1/5</p>
             </div>
             <div class="score">
-                <p class="score-count"><b>0</b></p>
+                <p id="score-count" class="score-count"><b>0</b></p>
                 <p class="point"><b>Pt</b></p>
             </div>
         </div>
         <div class="game">
             <!--Add game code here-->
-            <div id="correct" class="popUpButton correct button">
+            <div data="C" class="answerBtn button">
                 <p>CORRECT</p>
             </div>
     
-            <div id="wrong" class="popUpButton wrong button">
+            <div data="W" class="answerBtn button">
                 <p>WRONG</p>
             </div>
         </div>
-
-        
-
     </div>
 
     <div class="popUp hide" id="popUp">
@@ -103,13 +100,16 @@
             </div>
         </div>
         <div class="buttons">
-            <img class="again roundedButton" src="./img/again.svg">
-            <img class="home roundedButton" src="./img/home.svg">
+            <img class="again roundedButton" id="again" src="./img/again.svg">
+            <img class="home roundedButton" id="home" src="./img/home.svg">
         </div>
     </div>
 
+    <img class="rotate" src="./img/rotate.png">
+    
     <audio id="click" src="sound/click.wav"></audio>
     <audio id="correct" src="./sound/correct.wav"></audio>
+    <audio id="lose" src="./sound/lose.wav"></audio>
     <audio id="wrong" src="./sound/wrong.wav"></audio>
     <audio id="clap" src="./sound/clap.wav"></audio>
     
