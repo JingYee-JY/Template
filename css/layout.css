@@ -13,7 +13,7 @@
     --popUpPadding:20px;
     --backgroundColour: #F1F1F1;
     --buttonBackgroundColor:#FBCE59;
-    --buttonTextColor:#FBCE59;
+    --buttonTextColor:black;
     --textBlackColor: black;
     --textWhiteColor: white;
     --fullsize: 100%;
@@ -87,6 +87,7 @@ body{
 
 .title{
     max-height: 110px;
+    width: auto;
 }
 
 .hide{
