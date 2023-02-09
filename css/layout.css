@@ -20,7 +20,8 @@
     --instructionBackgroundColor: white;
     --gameTopBackground: #FBCE59;
     --pointBackground:blue;
-    --popUpBackground:blue;
+    --popUpBackground:rgba(217, 217, 217, 0.8);
+    --popUp:blue;
     --borderColor: black;
     --finalPopUpBackground:green;
     --scoreTextBackground: yellow;
@@ -86,7 +87,6 @@ body{
 
 .title{
     max-height: 110px;
-    width: auto;
 }
 
 .hide{
@@ -122,7 +122,7 @@ body{
     flex-direction: column;
     gap: 10px;
     padding: var(--padding);
-    background-color: var(--popUpBackground);
+    background-color: var(--popUp);
     border: 15px solid var(--borderColor);
 }
 
@@ -146,6 +146,10 @@ body{
 }
 
 /*PopUp*/
+.popUp{
+    background-color: var(--popUpBackground);
+}
+
 .mark{
     width: 35%;
     height: auto;
