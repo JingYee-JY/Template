@@ -42,6 +42,7 @@ const levels = [
 ]
 
 let current;
+let addscore = 1
 let total = 5;
 let score;
 
@@ -249,6 +250,9 @@ function endGame(){
 
             if(score == total){
                 scoreText.textContent = "Superstar!"
+            }
+            else if(score > pass){
+                scoreText.textContent = "Well done!"
             }
             else{
                 scoreText.textContent = "Good try!"

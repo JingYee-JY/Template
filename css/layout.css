@@ -37,6 +37,7 @@ body{
     height: var(--fullsize);
     overflow: hidden;
     position: fixed;
+    background-color: var(--backgroundColour);
 }
 
 .startPage,
@@ -144,7 +145,7 @@ body{
     border-radius: 20px;
     font-size: 26px;
     padding: var(--topPadding);
-    background-color: var(--buttonBackgroundColor);
+    background-color: var(--instructionBackgroundColor);
 }
 
 /*GamePage*/
@@ -295,7 +296,6 @@ if useing this change the first version css to this*/
 .again, .home{
     position: relative;
     z-index: 12;
-    filter: invert(0%) sepia(100%) saturate(1352%) hue-rotate(87deg) brightness(109%) contrast(119%);
 }
 
 @keyframes animate{
@@ -340,7 +340,7 @@ if useing this change the first version css to this*/
 /*mobile*/
 @media screen and (max-width: 767px){
     .preview{
-        max-height: 350px;
+        max-height: 300px;
     }
 }
 
