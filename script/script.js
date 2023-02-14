@@ -123,7 +123,7 @@ answerBtn.forEach(function(button){
             else{
                 Question()
             }
-        }, 2000)
+        }, 3000)
     })    
 })
 
